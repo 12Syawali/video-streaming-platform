@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "Plus Jakarta Sans";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.75rem;
+
+    --background: 0.15 0.014 265;
+    --foreground: 0.95 0.008 265;
+    --card: 0.19 0.016 265;
+    --card-foreground: 0.95 0.008 265;
+    --popover: 0.22 0.018 265;
+    --popover-foreground: 0.95 0.008 265;
+
+    --primary: 0.78 0.16 78;
+    --primary-foreground: 0.15 0.02 78;
+
+    --secondary: 0.24 0.02 265;
+    --secondary-foreground: 0.86 0.008 265;
+    --muted: 0.24 0.02 265;
+    --muted-foreground: 0.62 0.012 265;
+
+    --accent: 0.78 0.14 195;
+    --accent-foreground: 0.15 0.02 195;
+
+    --destructive: 0.62 0.2 25;
+    --destructive-foreground: 0.96 0.008 25;
+
+    --success: 0.7 0.16 150;
+    --warning: 0.8 0.15 85;
+
+    --border: 0.3 0.02 265;
+    --input: 0.3 0.02 265;
+    --ring: 0.78 0.16 78;
+
+    --chart-1: 0.78 0.16 78;
+    --chart-2: 0.78 0.14 195;
+    --chart-3: 0.7 0.16 150;
+    --chart-4: 0.62 0.2 25;
+    --chart-5: 0.65 0.2 305;
+
+    --sidebar: 0.19 0.016 265;
+    --sidebar-foreground: 0.95 0.008 265;
+    --sidebar-primary: 0.78 0.16 78;
+    --sidebar-primary-foreground: 0.15 0.02 78;
+    --sidebar-accent: 0.24 0.02 265;
+    --sidebar-accent-foreground: 0.86 0.008 265;
+    --sidebar-border: 0.3 0.02 265;
+    --sidebar-ring: 0.78 0.16 78;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.82 0.16 82),
+      oklch(0.72 0.17 60)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.2 0.016 265),
+      oklch(0.16 0.014 265)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+  .text-gradient-primary {
+    background-image: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

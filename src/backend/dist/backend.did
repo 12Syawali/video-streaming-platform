@@ -1,0 +1,174 @@
+type VideoView = 
+ record {
+   category: Category;
+   createdAt: Timestamp;
+   description: text;
+   id: VideoId;
+   likeCount: nat;
+   owner: UserId;
+   thumbnail: FileRef;
+   title: text;
+   videoFile: FileRef;
+   viewCount: nat;
+ };
+type VideoId = nat;
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserId = principal;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec HttpHeader;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: HttpRequestResult;
+ };
+type Timestamp = int;
+type StripeSessionStatus = 
+ variant {
+   completed: record {
+                response: text;
+                userPrincipal: opt text;
+              };
+   failed: record {error: text;};
+ };
+type StripeConfiguration = 
+ record {
+   allowedCountries: vec text;
+   secretKey: text;
+ };
+type ShoppingItem = 
+ record {
+   currency: text;
+   priceInCents: nat;
+   productDescription: text;
+   productName: text;
+   quantity: nat;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ProfileView = 
+ record {
+   avatar: opt FileRef;
+   coinBalance: nat;
+   displayName: text;
+   followerCount: nat;
+   followingCount: nat;
+   owner: UserId;
+ };
+type HttpRequestResult = 
+ record {
+   body: blob;
+   headers: vec HttpHeader;
+   status: nat;
+ };
+type HttpHeader = 
+ record {
+   name: text;
+   value: text;
+ };
+type FileRef = text;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type CoinPack = 
+ record {
+   coins: nat;
+   currency: text;
+   description: text;
+   id: text;
+   name: text;
+   priceInCents: nat;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type Category = 
+ variant {
+   entertainment;
+   game;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  confirmCoinPurchase: (sessionId: text, packId: text) -> (nat);
+  createCheckoutSession: (items: vec ShoppingItem, successUrl: text,
+   cancelUrl: text) -> (text);
+  createCoinCheckout: (packId: text, successUrl: text, cancelUrl: text) ->
+   (text);
+  createVideo: (title: text, description: text, videoFile: FileRef,
+   thumbnail: FileRef, category: Category) -> (VideoView);
+  creditMyCoins: (amount: nat) -> (nat);
+  execute: (qJson: text) -> (Result) query;
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getMyCoinBalance: () -> (nat) query;
+  getMyProfile: () -> (ProfileView) query;
+  getProfile: (user: UserId) -> (opt ProfileView) query;
+  getStripeSessionStatus: (sessionId: text) -> (StripeSessionStatus);
+  getVideo: (id: VideoId) -> (opt VideoView) query;
+  incrementViewCount: (id: VideoId) -> ();
+  isCallerAdmin: () -> (bool) query;
+  isFollowing: (creator: UserId) -> (bool) query;
+  isStripeConfigured: () -> (bool) query;
+  listByCategory: (category: Category) -> (vec VideoView) query;
+  listCoinPacks: () -> (vec CoinPack) query;
+  listFeed: () -> (vec VideoView) query;
+  listMySaved: () -> (vec VideoView) query;
+  listMyVideos: () -> (vec VideoView) query;
+  listTrending: () -> (vec VideoView) query;
+  schema: () -> (text) query;
+  setStripeConfiguration: (config: StripeConfiguration) -> ();
+  toggleFollow: (creator: UserId) -> (bool);
+  toggleLike: (videoId: VideoId) -> (bool);
+  toggleSave: (videoId: VideoId) -> (bool);
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  updateMyProfile: (displayName: text, avatar: opt FileRef) -> (ProfileView);
+}

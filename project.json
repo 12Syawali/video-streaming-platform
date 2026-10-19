@@ -1,0 +1,22 @@
+{
+  "overview": "A YouTube-style video app where people browse a trending feed, watch videos with autoplay, upload their own clips, follow creators, and manage a profile with coins.",
+  "features": [
+    "Four-tab bottom navigation: Home, Trending, Upload, Profile",
+    "Home feed of video cards with thumbnails, titles, creators and view counts",
+    "Trending list ranked by views with viral game and entertainment clips",
+    "Full-screen player with autoplay, unmute control, like and save",
+    "Upload videos with a title and description",
+    "Follow creators and see follower counts",
+    "Profile with avatar upload, display name editing, own videos and saved videos",
+    "Buy coin packs with a card and track your coin balance"
+  ],
+  "category": "video-streaming",
+  "tags": [
+    "video",
+    "social",
+    "entertainment",
+    "creator",
+    "media"
+  ],
+  "last_updated": "2026-10-19T11:05:59.437Z"
+}
